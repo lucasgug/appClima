@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pading_Normal">16dp</dimen>
+    <dimen name="pading_min">8dp</dimen>
+</resources>
