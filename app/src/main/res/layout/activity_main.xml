@@ -3,7 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    
+    
+    <data>
 
+        <variable
+            name="viewModel"
+            type="com.lucasgugliuzza.clima.mainModule.viewModel.MainViewModel" />
+
+
+    </data>
+
+    
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,11 +25,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#C83737"
+            android:text="@{viewModel.result.timezone.replace(`_`,` `)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textAppearance="?attr/textAppearanceHeadline4"
             tools:text="TimeZone"
+            app:isGone= "@{!viewModel.isLoaded()}"
             />
 
         <com.google.android.material.textview.MaterialTextView
@@ -30,91 +43,44 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTimeZone"
             android:textAppearance="?attr/textAppearanceHeadline5"
-            tools:text="Current Weather"
+            android:text="@string/main_current_weather_title"
             />
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+
+
+        <include
+            android:id="@+id/current"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            layout="@layout/item_weather"
+            app:current = "@{viewModel.result.current}"
+            app:isGone="@{!viewModel.isLoaded()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvCurrentTitle"
-            android:paddingHorizontal="@dimen/pading_Normal"
-            android:layout_marginVertical="@dimen/pading_min"
-            >
+            />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvForecastTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/current"
+            android:textAppearance="?attr/textAppearanceHeadline5"
+            android:text="@string/main_forecast_weather_title"
+            />
 
-            <com.google.android.material.textview.MaterialTextView
-               android:id="@+id/tvTemp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textColor="?attr/colorSecondaryVariant"
-                tools:text="2546 grados Weather"
-                android:gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvDt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBody1"
-                tools:text="22'' "
-                android:gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvHumidity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceOverline"
-                tools:text="34 grados de humedad "
-                android:gravity="center"
-                app:layout_constraintStart_toStartOf="@id/tvDt"
-                app:layout_constraintTop_toBottomOf="@id/tvDt"
-
-                />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBody1"
-                tools:text="Clouds"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceCaption"
-                tools:text="mas info "
-                android:gravity="center"
-                app:layout_constraintStart_toStartOf="@id/tvMain"
-                app:layout_constraintTop_toBottomOf="@id/tvMain"
-
-                />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="#3E3B3B"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            tools:listitem="@layout/item_weather"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvForecastTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:layout_width="0dp"
@@ -124,6 +90,7 @@
             app:layout_constraintTop_toTopOf="@id/tvTimeZone"
             app:layout_constraintBottom_toBottomOf="parent"
             android:indeterminate="true"
+            app:isGone="@{viewModel.isLoaded()}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

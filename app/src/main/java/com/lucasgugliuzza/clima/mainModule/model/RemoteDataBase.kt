@@ -11,6 +11,7 @@ import retrofit2.create
 
 class RemoteDataBase {
 
+    //CONFIGURAMOS RETROFIT
     private val retrofit = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
@@ -19,9 +20,9 @@ class RemoteDataBase {
 
     private val service = retrofit.create(WeatherService::class.java)
 
-    suspend fun getWeatherForecastByCoordinator(lat:Double ,lon:Double ,appId:String,
+    suspend fun getWeatherForecastByCoordinator(lat:Double ,lon:Double ,appId:String,exclude:String,
             units:String,lang:String
     ): WeatherForecastEntity = withContext(Dispatchers.IO) {
-        service.getWeatherForecastByCoordinator(lat,lon,appId,units,lang)
+        service.getWeatherForecastByCoordinator(lat,lon,appId,units,lang,exclude)
     }
 }
