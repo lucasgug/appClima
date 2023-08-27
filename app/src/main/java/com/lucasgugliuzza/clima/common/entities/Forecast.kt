@@ -3,9 +3,9 @@ package com.lucasgugliuzza.clima.common.entities
 data class Forecast(
 
     val dt: Long,
-    val humidty: Int,
+    val humidity: Int,
     val temp: Double,
     val weather: List<Weather>,
     val pop :Double
-) : WeatherBase(dt,humidty,temp,weather)
+) : WeatherBase(dt,humidity,temp,weather)
 

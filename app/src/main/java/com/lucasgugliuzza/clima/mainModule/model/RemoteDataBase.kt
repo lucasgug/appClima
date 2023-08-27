@@ -11,6 +11,7 @@ import retrofit2.create
 
 class RemoteDataBase {
 
+    //CONFIGURAMOS RETROFIT
     private val retrofit = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())

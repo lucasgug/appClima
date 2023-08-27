@@ -3,7 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    
+    
+    <data>
+        <import type="com.lucasgugliuzza.clima.common.utils.CommonUtils"/>
+        <variable
+            name="viewModel"
+            type="com.lucasgugliuzza.clima.mainModule.viewModel.MainViewModel" />
+    </data>
 
+    
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#C83737"
+            android:text="@{viewModel.result.timezone.replace(`_`,` `)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +40,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTimeZone"
             android:textAppearance="?attr/textAppearanceHeadline5"
-            tools:text="Current Weather"
+            android:text="@string/main_current_weather_title"
             />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -49,6 +59,7 @@
                 android:textColor="?attr/colorSecondaryVariant"
                 tools:text="2546 grados Weather"
                 android:gravity="center"
+                android:text="@{@string/weather_temp(viewModel.result.current.temp)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -59,11 +70,12 @@
                 android:id="@+id/tvDt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBody1"
-                tools:text="22'' "
                 android:gravity="center"
+                android:text="@{@string/weather_dt(CommonUtils.INSTANCE.getHour(viewModel.result.current.dt))}"
+                android:textAppearance="?attr/textAppearanceBody1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                tools:text="22'' "
 
                 />
 
@@ -74,6 +86,7 @@
                 android:textAppearance="?attr/textAppearanceOverline"
                 tools:text="34 grados de humedad "
                 android:gravity="center"
+                android:text="@{@string/weather_humidity(viewModel.result.current.humidity)}"
                 app:layout_constraintStart_toStartOf="@id/tvDt"
                 app:layout_constraintTop_toBottomOf="@id/tvDt"
 
@@ -85,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceBody1"
                 tools:text="Clouds"
+                android:text="@{CommonUtils.INSTANCE.getWeatherMain(viewModel.result.current.weather)}"
                 android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -97,9 +111,13 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceCaption"
                 tools:text="mas info "
+                android:text="@{CommonUtils.INSTANCE.getWeatherDescription(viewModel.result.current.weather)}"
                 android:gravity="center"
                 app:layout_constraintStart_toStartOf="@id/tvMain"
                 app:layout_constraintTop_toBottomOf="@id/tvMain"
+                app:layout_constraintEnd_toEndOf="@id/tvMain"
+                android:layout_marginEnd="8dp"
+
 
                 />
 
