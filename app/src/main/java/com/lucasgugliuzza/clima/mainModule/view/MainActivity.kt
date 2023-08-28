@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     override fun onStart() {
         super.onStart()
         lifecycleScope.launch{
-            binding.viewModel?.getWeatherAndForecast(41.461619, 14.724515 ,"6a5c325c9265883997730d09be2328e8","hourly" ,"metric","en" )
+            binding.viewModel?.getWeatherAndForecast(41.461619, 14.724515 ,"6a5c325c9265883997730d09be2328e8","" ,"metric","en" )
         }
     }
 
